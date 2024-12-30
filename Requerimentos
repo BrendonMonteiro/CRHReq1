@@ -1341,11 +1341,14 @@ function gatherFormData() {
     // Condição específica para form12
     if (formId === "form12") {
         var attlist_tag_value = $("#attlist_tag").val(); // Obtém o valor da tag
-        const texto = `[font=Poppins][table class="rank crh" style="border: none!important; overflow: hidden"]` +
+        const texto = `[font=Poppins][center][table  style="border: none!important; overflow: hidden; border-radius: 20px; line-height: 1.2em; width: 74%; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2)" bgcolor="61a38b"]` +
                       `[tr style="border: none!important; overflow: hidden"]` +
                       `[td style="border: none!important; overflow: hidden"]` +
-                      `[b][size=16][CRH] Atualização realizada! [${attlist_tag_value}][/size][/b]\n` +
-                      `Em caso de dúvidas ou ocorrência de erros, favor contatar a Liderança.[/td][/tr][/table][/font]`;
+                      `[img(20px,20px)]https://i.imgur.com/xLjozX6.png[/img]\n\n`+
+                      `[img]https://i.imgur.com/ueosal0.gif[/img]\n`+
+                      `[color=white][size=18][b][CRH] Atualização realizada! [${attlist_tag_value}][/size][/b]\n` +
+                      `[size=12]Foi realizada uma atualização neste horário. Em caso de dúvidas, contate a liderança.[/color][/size]`+
+                      `[/td][/tr][/table][/center][/font]`;
         return texto; // Retorna o BBCode específico para form12
     }
 
