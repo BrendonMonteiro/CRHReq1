@@ -910,6 +910,16 @@ body {
                   <a href="#">REBAIXAMENTO</a>
                 </div>
               </li>
+              <li onclick="toggleForm('form13')" id="item13">
+                <div style="display: flex; gap: 1rem; align-items: center">
+                  <a href="#">ADVERTÊNCIA</a>
+                </div>
+              </li>
+              <li onclick="toggleForm('form14')" id="item14">
+                <div style="display: flex; gap: 1rem; align-items: center">
+                  <a href="#">ALTERAÇÃO DE HORÁRIO</a>
+                </div>
+              </li>
             <li onclick="toggleForm('form3')" id="item3">
               <div style="display: flex; gap: 1rem; align-items: center">
                 <a href="#">LICENÇA/RESERVA</a>
@@ -956,6 +966,17 @@ body {
       <div id="form1" name="entcia" class="form-container">
         <form onsubmit="event.preventDefault(); submitForm1();">
           <input type="text" name="nick_ent" placeholder="Nickname(s)" required />
+          <select name="" required>
+            <option value="" disabled selected>Horário</option>
+            <option value="00h00">00h00</option>
+            <option value="02h00">02h00</option>
+            <option value="11h00">11h00</option>
+            <option value="14h00">14h00</option>
+            <option value="16h00">16h00</option>
+            <option value="18h00">18h00</option>
+            <option value="20h00">20h00</option>
+            <option value="22h00">22h00</option>
+        </select>
           <button type="submit">Enviar</button>
         </form>
       </div> 
@@ -1091,6 +1112,37 @@ body {
           <button type="submit">Enviar</button>
         </form>
       </div>
+      <div id="form14" class="form-container">
+        <form novalidate>
+          <input type="text" placeholder="Nickname" required />
+          <div class="row">
+          <select name="" required>
+            <option value="" disabled selected>Horário Antigo</option>
+            <option value="00h00">00h00</option>
+            <option value="02h00">02h00</option>
+            <option value="11h00">11h00</option>
+            <option value="14h00">14h00</option>
+            <option value="16h00">16h00</option>
+            <option value="18h00">18h00</option>
+            <option value="20h00">20h00</option>
+            <option value="22h00">22h00</option>
+        </select>
+        <select name="" required>
+            <option value="" disabled selected>Novo Horário</option>
+            <option value="00h00">00h00</option>
+            <option value="02h00">02h00</option>
+            <option value="11h00">11h00</option>
+            <option value="14h00">14h00</option>
+            <option value="16h00">16h00</option>
+            <option value="18h00">18h00</option>
+            <option value="20h00">20h00</option>
+            <option value="22h00">22h00</option>
+        </select>
+    </div>
+          <input type="text" placeholder="Permissão" required />
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
       <div id="form10" class="form-container">
         <form novalidate>
           <select required>
@@ -1221,6 +1273,7 @@ window.onload = function () {
     form11: "REINTEGRAÇÃO",
     form12: "ATUALIZAÇÃO DA LISTAGEM",
     form13: "ADVERTÊNCIA",
+    form14: "ALTERAÇÃO DE HORÁRIO",
   };
 
   function toggleForm(formId) {
@@ -1299,6 +1352,7 @@ function gatherFormData() {
     let formData = "";
 
     if (formId === "form13") {
+    const title = formTitles[formId];
     const inputs = activeForm.querySelectorAll("input, select");
     let tipo = "";
     let cargoNickname = "";
@@ -1328,7 +1382,8 @@ function gatherFormData() {
     const formattedFutureDate = `${futureDate.getDate().toString().padStart(2, '0')} ${monthFuture.charAt(0).toUpperCase() + monthFuture.slice(1)} ${futureDate.getFullYear()}`;
 
     // Formata o BBCode incluindo o intervalo de datas
-    formData += `[font=poppins][justify][b]Nickname:[/b] ${cargoNickname}\n`;
+    formData += `[font=poppins][size=18][center][color=#61a38b][b]${title}[/b][/color][/center][/size]\n`;
+    formData += `[justify][b]Nickname:[/b] ${cargoNickname}\n`;
     formData += `[b]Motivo(s):[/b] ${motivos}\n`;
     formData += `[b]Período:[/b] ${formattedToday} a ${formattedFutureDate}\n`; // Adiciona o intervalo de datas
     formData += `[/justify][/font]\n`;
@@ -1395,7 +1450,7 @@ function gatherFormData() {
     checkboxes.forEach((checkbox) => {
         if (checkbox.checked) {
             const label = checkbox.nextElementSibling.innerText.trim();
-            formData += `[b]☒[/b] ${label}\n`;
+            formData += `\n[b]✓[/b] ${label}\n`;
         }
     });
 
@@ -1430,7 +1485,7 @@ function gatherFormData() {
       const bbcodeMessage = gatherFormData();
       if (bbcodeMessage) {
         const formId = $(this).closest(".form-container").attr("id");
-        const targetThread = formId === "form13" ? 36603 : 36603; // Alteração para definir o valor de 't' com base no formulário
+        const targetThread = formId === "form13" ? 38061 : 36603; // Alteração para definir o valor de 't' com base no formulário
 
         setTimeout(function () {
           $.post("/post", {
